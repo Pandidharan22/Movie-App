@@ -1,12 +1,49 @@
-# React + Vite
+# Movie App (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple movie search and discovery app built with React and Vite. It fetches movies from TMDB and tracks trending searches using Appwrite.
 
-Currently, two official plugins are available:
+## Features
+- Search movies with debounced input
+- Discover popular movies
+- Loading state with spinner and error handling
+- Trending movies list powered by Appwrite (top searches)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React (Vite)
+- Appwrite Web SDK
+- Fetch API
 
-## Expanding the ESLint configuration
+## Prerequisites
+- Node.js 18+ and npm
+- TMDB account + API key
+- Appwrite project, database, and collection
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Environment Variables
+Create a `.env.local` file in the project root using `.env.example` as a reference:
+
+- `VITE_TMDB_API_KEY` — Your TMDB API Bearer token
+- `VITE_APPWRITE_PROJECT_ID` — Appwrite Project ID
+- `VITE_APPWRITE_DATABASE_ID` — Appwrite Database ID
+- `VITE_APPWRITE_COLLECTION_ID` — Appwrite Collection ID
+
+Note: `.env.local` is ignored by Git.
+
+## Appwrite Setup (for Trending)
+Create a collection with at least these attributes:
+- `searchTerm` (string)
+- `count` (integer)
+- `movie_id` (string)
+- `poster_url` (string)
+
+The app increments `count` for an existing `searchTerm`, or creates a new document when a term is searched.
+
+## Scripts
+- Install: `npm install`
+- Dev server: `npm run dev`
+- Build: `npm run build`
+- Preview build: `npm run preview`
+
+## Notes
+- After changing env variables, restart the dev server.
+- If TMDB requests fail, verify the Bearer token and that it’s exposed as `VITE_TMDB_API_KEY`.
+- Ensure Appwrite endpoint is `https://cloud.appwrite.io/v1` and the provided IDs are correct.
